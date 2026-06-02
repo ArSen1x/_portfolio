@@ -27,11 +27,8 @@ export function TypewriterHero({ phrases = DEFAULT_PHRASES }: TypewriterHeroProp
   const current = phrases[index];
 
   useEffect(() => {
-    // Reduced-motion: show first phrase in full, run no timers.
-    if (prefersReduced) {
-      setSub(phrases[0].length);
-      return;
-    }
+    // Reduced-motion: show first phrase in full (derived via displayText), run no timers.
+    if (prefersReduced) return;
 
     let id: ReturnType<typeof setTimeout>;
 
@@ -45,9 +42,11 @@ export function TypewriterHero({ phrases = DEFAULT_PHRASES }: TypewriterHeroProp
       // Delete one character.
       id = setTimeout(() => setSub((s) => s - 1), DELETE_MS);
     } else {
-      // Done deleting — advance to next phrase.
-      setDeleting(false);
-      setIndex((i) => (i + 1) % phrases.length);
+      // Done deleting — advance to next phrase via timer so setState is in a callback, not the effect body.
+      id = setTimeout(() => {
+        setDeleting(false);
+        setIndex((i) => (i + 1) % phrases.length);
+      }, 0);
     }
 
     return () => clearTimeout(id);

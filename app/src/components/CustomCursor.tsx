@@ -18,8 +18,12 @@ const MAGNET = { stiffness: 350, damping: 35, mass: 0.8 };
 
 export function CustomCursor() {
   const reduce = useReducedMotion();
-  const [enabled, setEnabled] = useState(false);
+  const [coarsePointer, setCoarsePointer] = useState(
+    () => typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches
+  );
   const [state, setState] = useState<CursorState>({ variant: "default" });
+
+  const enabled = !reduce && !coarsePointer;
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -29,12 +33,11 @@ export function CustomCursor() {
   const magnetEl = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    if (reduce) {
-      setEnabled(false);
-      return;
-    }
-    setEnabled(!window.matchMedia("(pointer: coarse)").matches);
-  }, [reduce]);
+    const mql = window.matchMedia("(pointer: coarse)");
+    const onChange = () => setCoarsePointer(mql.matches);
+    mql.addEventListener("change", onChange);
+    return () => mql.removeEventListener("change", onChange);
+  }, []);
 
   useEffect(() => {
     if (!enabled) return;
