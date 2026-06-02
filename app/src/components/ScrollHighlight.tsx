@@ -11,8 +11,9 @@ function HighlightWord({
   range: [number, number];
 }) {
   const opacity = useTransform(progress, range, [0.15, 1]);
+  const blur = useTransform(progress, range, ["blur(4px)", "blur(0px)"]);
   return (
-    <motion.span className="mr-[0.28em]" style={{ opacity }}>
+    <motion.span className="mr-[0.28em]" style={{ opacity, filter: blur }}>
       {children}
     </motion.span>
   );
