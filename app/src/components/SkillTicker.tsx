@@ -1,10 +1,5 @@
-import { motion, useMotionValue, useAnimationFrame } from "motion/react";
+import { motion, useMotionValue, useAnimationFrame, useReducedMotion } from "motion/react";
 import { useRef, useState } from "react";
-
-function loop(v: number, min: number, max: number) {
-  const range = max - min;
-  return min + ((((v - min) % range) + range) % range);
-}
 
 interface SkillTickerProps {
   items?: string[];
@@ -32,31 +27,67 @@ export function SkillTicker({
 }: SkillTickerProps) {
   const x = useMotionValue(0);
   const trackRef = useRef<HTMLDivElement>(null);
-  const [hovered, setHovered] = useState(false);
-  const currentSpeed = hovered ? speed * 0.5 : speed;
+  // Use a ref for hovered so the animation frame closure always reads the latest value
+  const hoveredRef = useRef(false);
+  const [, setHoveredState] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   useAnimationFrame((_, delta) => {
+    if (shouldReduceMotion) return;
     const track = trackRef.current;
     if (!track) return;
-    const half = track.scrollWidth / 2;
-    x.set(loop(x.get() - (currentSpeed * delta) / 1000, -half, 0));
+    // half = width of one copy; guard against 0 before DOM is measured
+    const oneCopyWidth = track.scrollWidth / 2;
+    if (oneCopyWidth === 0) return;
+    const speedMultiplier = hoveredRef.current ? 0.5 : 1;
+    const newX = x.get() - (speed * speedMultiplier * delta) / 1000;
+    // Seamless wrap: when we've scrolled one full copy, reset without a visible jump
+    x.set(newX <= -oneCopyWidth ? newX + oneCopyWidth : newX);
   });
+
+  const handlePointerEnter = () => {
+    hoveredRef.current = true;
+    setHoveredState(true);
+  };
+  const handlePointerLeave = () => {
+    hoveredRef.current = false;
+    setHoveredState(false);
+  };
 
   const separator = (
     <span className="inline-block w-1 h-1 rotate-45 bg-text-tertiary/50 shrink-0 mx-6 self-center" />
   );
 
-  const content = items.map((item, i) => (
-    <span key={i} className="font-mono text-xs text-text-tertiary whitespace-nowrap shrink-0">
-      {item}
-    </span>
-  ));
+  const buildRow = (keyPrefix: string) =>
+    items.reduce((acc, item, i) => {
+      acc.push(
+        <span
+          key={`${keyPrefix}-${i}`}
+          className="font-mono text-xs text-text-tertiary whitespace-nowrap shrink-0"
+        >
+          {item}
+        </span>
+      );
+      if (i < items.length - 1) acc.push(<span key={`${keyPrefix}-sep-${i}`} className="inline-block w-1 h-1 rotate-45 bg-text-tertiary/50 shrink-0 mx-6 self-center" />);
+      return acc;
+    }, [] as React.ReactNode[]);
+
+  // Static render for users who prefer reduced motion
+  if (shouldReduceMotion) {
+    return (
+      <div className={`overflow-hidden w-full mask-edge-fade ${className}`}>
+        <div className="flex items-center gap-0 w-max">
+          {buildRow("static")}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <motion.div
       className={`overflow-hidden w-full mask-edge-fade ${className}`}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      onPointerEnter={handlePointerEnter}
+      onPointerLeave={handlePointerLeave}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -67,23 +98,11 @@ export function SkillTicker({
         className="flex items-center gap-0 w-max"
         style={{ x }}
       >
-        {content.reduce(
-          (acc, item, i) => {
-            acc.push(item);
-            if (i < content.length - 1) acc.push(separator);
-            return acc;
-          },
-          [] as React.ReactNode[]
-        )}
+        {/* First copy */}
+        {buildRow("a")}
         {separator}
-        {content.reduce(
-          (acc, item, i) => {
-            acc.push(item);
-            if (i < content.length - 1) acc.push(separator);
-            return acc;
-          },
-          [] as React.ReactNode[]
-        )}
+        {/* Second copy — exact duplicate so scrollWidth / 2 = one copy's width */}
+        {buildRow("b")}
       </motion.div>
     </motion.div>
   );
