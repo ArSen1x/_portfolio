@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   AnimatePresence,
   motion,
@@ -11,7 +11,7 @@ import type { CSSProperties } from "react";
 type CursorState =
   | { variant: "default" }
   | { variant: "label"; label: string }
-  | { variant: "magnetic"; rect: DOMRect };
+  | { variant: "magnetic"; el: HTMLElement; rect: DOMRect };
 
 const FOLLOW = { stiffness: 500, damping: 40, mass: 0.6 };
 const MAGNET = { stiffness: 350, damping: 35, mass: 0.8 };
@@ -25,6 +25,8 @@ export function CustomCursor() {
   const y = useMotionValue(0);
   const fx = useSpring(x, FOLLOW);
   const fy = useSpring(y, FOLLOW);
+  // Tracks the currently-hovered magnetic element so the scroll listener can refresh its rect.
+  const magnetEl = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     if (reduce) {
@@ -47,24 +49,47 @@ export function CustomCursor() {
         const rect = el.getBoundingClientRect();
         x.set(rect.left + rect.width / 2);
         y.set(rect.top + rect.height / 2);
-        setState({ variant: "magnetic", rect });
+        magnetEl.current = el;
+        // Bail out if we're already tracking this exact element to avoid re-renders.
+        setState((s) =>
+          s.variant === "magnetic" && s.el === el ? s : { variant: "magnetic", el, rect }
+        );
         return;
       }
 
+      magnetEl.current = null;
       x.set(e.clientX);
       y.set(e.clientY);
       if (el) {
+        // data-cursor attribute value is currently only used as a label fallback;
+        // visuals are driven by the label/magnetic distinction, not the attribute value.
         const v = el.getAttribute("data-cursor") ?? "";
         const label = el.getAttribute("data-cursor-label") ?? v;
-        setState({ variant: "label", label });
+        // Bail out when the label hasn't changed to avoid a re-render on every move.
+        setState((s) =>
+          s.variant === "label" && s.label === label ? s : { variant: "label", label }
+        );
       } else {
         setState((s) => (s.variant === "default" ? s : { variant: "default" }));
       }
     }
 
+    // Recompute the magnetic rect on scroll so the overlay doesn't freeze if the
+    // user scrolls without moving the mouse. capture:true catches Lenis / inner containers.
+    function onScroll() {
+      const el = magnetEl.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      x.set(rect.left + rect.width / 2);
+      y.set(rect.top + rect.height / 2);
+      setState((s) => (s.variant === "magnetic" ? { variant: "magnetic", el, rect } : s));
+    }
+
     window.addEventListener("pointermove", onMove, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true, capture: true });
     return () => {
       window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("scroll", onScroll, { capture: true });
       document.body.style.cursor = "";
     };
   }, [enabled, x, y]);
