@@ -112,7 +112,7 @@ export function SkillFolder() {
                 Tech Stack
               </motion.h3>
 
-              <div className="grid grid-cols-3 gap-x-6 gap-y-8 w-full justify-items-center">
+              <motion.div className="grid grid-cols-3 gap-x-6 gap-y-8 w-full justify-items-center">
                 {skills.map((skill) => (
                   <motion.div
                     key={skill.name}
@@ -134,7 +134,7 @@ export function SkillFolder() {
                     </span>
                   </motion.div>
                 ))}
-              </div>
+              </motion.div>
 
               <motion.button
                 initial={{ opacity: 0 }}
