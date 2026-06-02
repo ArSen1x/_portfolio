@@ -2,19 +2,8 @@ import { motion, AnimatePresence, type Variants } from "motion/react";
 import { useState, useEffect } from "react";
 
 const containerVariants: Variants = {
-  hidden: {},
-  show: {
-    transition: {
-      staggerChildren: 0.04,
-      delayChildren: 0.05,
-    },
-  },
-  exit: {
-    transition: {
-      staggerChildren: 0.03,
-      staggerDirection: -1,
-    },
-  },
+  hidden: { transition: { staggerChildren: 0.03, staggerDirection: -1 } },
+  show: { transition: { staggerChildren: 0.04, delayChildren: 0.05 } },
 };
 
 const itemVariants: Variants = {
@@ -24,7 +13,6 @@ const itemVariants: Variants = {
     opacity: 1,
     transition: { type: "spring", stiffness: 300, damping: 24 },
   },
-  exit: { scale: 0.4, opacity: 0, transition: { duration: 0.15 } },
 };
 
 const skills = [
@@ -90,15 +78,22 @@ export function SkillFolder() {
       {/* Expanded State Overlay */}
       <AnimatePresence>
         {open && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
-            {/* Backdrop */}
+          <motion.div
+            key="skill-overlay"
+            className="fixed inset-0 z-[100] flex items-center justify-center p-6"
+            variants={containerVariants}
+            initial="hidden"
+            animate="show"
+            exit="hidden"
+          >
+            {/* Backdrop — static blur, animate opacity only */}
             <motion.div
-              initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
-              animate={{ opacity: 1, backdropFilter: "blur(24px)" }}
-              exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
               onClick={() => setOpen(false)}
-              className="absolute inset-0 bg-black/40"
+              className="absolute inset-0 bg-black/40 backdrop-blur-2xl"
             />
 
             {/* Expanded Folder */}
@@ -106,6 +101,7 @@ export function SkillFolder() {
               layoutId="folder-bg"
               className="relative w-full max-w-[340px] bg-white/[0.1] backdrop-blur-3xl rounded-[38px] p-8 shadow-[0_32px_64px_rgba(0,0,0,0.5)] border border-white/[0.1] flex flex-col items-center"
               transition={{ type: "spring", stiffness: 350, damping: 35 }}
+              onClick={(e) => e.stopPropagation()}
             >
               <motion.h3
                 initial={{ opacity: 0, y: 10 }}
@@ -116,13 +112,7 @@ export function SkillFolder() {
                 Tech Stack
               </motion.h3>
 
-              <motion.div
-                className="grid grid-cols-3 gap-x-6 gap-y-8 w-full justify-items-center"
-                variants={containerVariants}
-                initial="hidden"
-                animate="show"
-                exit="exit"
-              >
+              <div className="grid grid-cols-3 gap-x-6 gap-y-8 w-full justify-items-center">
                 {skills.map((skill) => (
                   <motion.div
                     key={skill.name}
@@ -144,7 +134,7 @@ export function SkillFolder() {
                     </span>
                   </motion.div>
                 ))}
-              </motion.div>
+              </div>
 
               <motion.button
                 initial={{ opacity: 0 }}
@@ -156,7 +146,7 @@ export function SkillFolder() {
                 Close Folder
               </motion.button>
             </motion.div>
-          </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </>
