@@ -1,5 +1,31 @@
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, type Variants } from "motion/react";
 import { useState, useEffect } from "react";
+
+const containerVariants: Variants = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.04,
+      delayChildren: 0.05,
+    },
+  },
+  exit: {
+    transition: {
+      staggerChildren: 0.03,
+      staggerDirection: -1,
+    },
+  },
+};
+
+const itemVariants: Variants = {
+  hidden: { scale: 0.4, opacity: 0 },
+  show: {
+    scale: 1,
+    opacity: 1,
+    transition: { type: "spring", stiffness: 300, damping: 24 },
+  },
+  exit: { scale: 0.4, opacity: 0, transition: { duration: 0.15 } },
+};
 
 const skills = [
   { name: "React", color: "#61DAFB" },
@@ -67,11 +93,12 @@ export function SkillFolder() {
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
             {/* Backdrop */}
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
+              animate={{ opacity: 1, backdropFilter: "blur(24px)" }}
+              exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
+              transition={{ duration: 0.3 }}
               onClick={() => setOpen(false)}
-              className="absolute inset-0 bg-black/40 backdrop-blur-2xl"
+              className="absolute inset-0 bg-black/40"
             />
 
             {/* Expanded Folder */}
@@ -89,35 +116,35 @@ export function SkillFolder() {
                 Tech Stack
               </motion.h3>
 
-              <div className="grid grid-cols-3 gap-x-6 gap-y-8 w-full justify-items-center">
+              <motion.div
+                className="grid grid-cols-3 gap-x-6 gap-y-8 w-full justify-items-center"
+                variants={containerVariants}
+                initial="hidden"
+                animate="show"
+                exit="exit"
+              >
                 {skills.map((skill) => (
                   <motion.div
                     key={skill.name}
                     className="flex flex-col items-center gap-2 group cursor-pointer"
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                    variants={itemVariants}
                   >
                     <motion.div
                       layoutId={`skill-icon-${skill.name}`}
                       className="w-14 h-14 rounded-2xl shadow-lg flex items-center justify-center"
-                      style={{ 
-                        background: skill.color === "#FFFFFF" 
-                          ? "linear-gradient(135deg, #fff 0%, #d1d1d1 100%)" 
+                      style={{
+                        background: skill.color === "#FFFFFF"
+                          ? "linear-gradient(135deg, #fff 0%, #d1d1d1 100%)"
                           : skill.color,
                         boxShadow: `0 8px 20px ${skill.color}20`
                       }}
                     />
-                    <motion.span 
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      className="text-[11px] font-medium text-text-secondary group-hover:text-text-primary transition-colors uppercase tracking-wider"
-                    >
+                    <span className="text-[11px] font-medium text-text-secondary group-hover:text-text-primary transition-colors uppercase tracking-wider">
                       {skill.name}
-                    </motion.span>
+                    </span>
                   </motion.div>
                 ))}
-              </div>
+              </motion.div>
 
               <motion.button
                 initial={{ opacity: 0 }}
