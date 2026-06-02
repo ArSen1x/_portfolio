@@ -54,10 +54,10 @@ export function SkillTicker({
     setHoveredState(false);
   };
 
-  const separator = (
-    <span className="inline-block w-1 h-1 rotate-45 bg-text-tertiary/50 shrink-0 mx-6 self-center" />
-  );
-
+  // Each copy is self-contained: items interleaved with separators AND a trailing
+  // separator so that when copy A is immediately followed by copy B the cadence
+  // at the seam is identical to every interior gap. This makes both copies
+  // byte-identical and ensures scrollWidth / 2 == exact per-copy wrap distance.
   const buildRow = (keyPrefix: string) =>
     items.reduce((acc, item, i) => {
       acc.push(
@@ -68,7 +68,8 @@ export function SkillTicker({
           {item}
         </span>
       );
-      if (i < items.length - 1) acc.push(<span key={`${keyPrefix}-sep-${i}`} className="inline-block w-1 h-1 rotate-45 bg-text-tertiary/50 shrink-0 mx-6 self-center" />);
+      // Always push a separator — including after the last item (trailing sep)
+      acc.push(<span key={`${keyPrefix}-sep-${i}`} className="inline-block w-1 h-1 rotate-45 bg-text-tertiary/50 shrink-0 mx-6 self-center" />);
       return acc;
     }, [] as React.ReactNode[]);
 
@@ -98,10 +99,10 @@ export function SkillTicker({
         className="flex items-center gap-0 w-max"
         style={{ x }}
       >
-        {/* First copy */}
+        {/* Two identical, self-contained copies. Each ends with a trailing
+            separator so the cadence at the wrap seam matches every interior gap.
+            scrollWidth / 2 == exact per-copy width == true wrap distance. */}
         {buildRow("a")}
-        {separator}
-        {/* Second copy — exact duplicate so scrollWidth / 2 = one copy's width */}
         {buildRow("b")}
       </motion.div>
     </motion.div>
