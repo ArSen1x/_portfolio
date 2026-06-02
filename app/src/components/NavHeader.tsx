@@ -54,6 +54,7 @@ export function NavHeader() {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
           title="Download Resume"
+          data-cursor-magnetic
         >
           <Download size={16} />
         </motion.a>

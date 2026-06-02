@@ -51,6 +51,7 @@ export function QuickLinks() {
               whileHover={{ scale: 1.1, backgroundColor: "rgba(255,255,255,0.04)" }}
               whileTap={{ scale: 0.95 }}
               aria-label={social.label}
+              data-cursor-magnetic
             >
               <social.icon size={20} />
             </motion.a>

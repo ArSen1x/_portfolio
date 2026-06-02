@@ -19,6 +19,8 @@ export function ProjectCard({ project, className = "" }: ProjectCardProps) {
           layoutId={`project-${project.id}`}
           onClick={() => setOpen(true)}
           className="rounded-card overflow-hidden cursor-pointer relative text-text-primary aspect-[4/3] group"
+          data-cursor="view"
+          data-cursor-label="View"
         >
           <motion.img
             layoutId={`project-img-${project.id}`}
