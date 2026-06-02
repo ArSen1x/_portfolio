@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { Download, Github, Linkedin, Twitter, Mail } from "lucide-react";
 import { BentoCard } from "@/components/BentoCard";
 import { PillButton } from "@/components/PillButton";

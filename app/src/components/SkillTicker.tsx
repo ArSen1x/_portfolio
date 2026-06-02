@@ -1,4 +1,4 @@
-import { motion, useMotionValue, useAnimationFrame } from "framer-motion";
+import { motion, useMotionValue, useAnimationFrame } from "motion/react";
 import { useRef, useState } from "react";
 
 function loop(v: number, min: number, max: number) {

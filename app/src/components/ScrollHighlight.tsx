@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
+import { motion, useScroll, useTransform, type MotionValue } from "motion/react";
 import { useRef } from "react";
 
 function HighlightWord({

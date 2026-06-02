@@ -34,7 +34,7 @@ export function TypewriterHero({
   }, [sub, deleting, current, index, phrases.length, typeSpeed, deleteSpeed, pause]);
 
   return (
-    <span>
+    <span className="inline-block min-h-[1.1em] min-w-[3ch] align-bottom">
       {current.slice(0, sub)}
       <span
         className="inline-block w-[2px] h-[1em] bg-current ml-0.5 align-[-2px] animate-blink"

@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import type { Project } from "@/types";
 import { ProjectCard } from "./ProjectCard";

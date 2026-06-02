@@ -1,20 +1,31 @@
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import { useState, useEffect } from "react";
 
 const skills = [
-  { name: "Frontend", color: "#6C8CFF" },
-  { name: "Backend", color: "#3DD6D0" },
-  { name: "Design", color: "#A78BFA" },
-  { name: "Mobile", color: "#F59E0B" },
-  { name: "3D", color: "#EC4899" },
-  { name: "Database", color: "#10B981" },
-  { name: "DevOps", color: "#0EA5E9" },
-  { name: "AI/ML", color: "#8B5CF6" },
-  { name: "Languages", color: "#F97316" },
+  { name: "React", color: "#61DAFB" },
+  { name: "TypeScript", color: "#3178C6" },
+  { name: "Node.js", color: "#339933" },
+  { name: "Next.js", color: "#FFFFFF" },
+  { name: "Tailwind", color: "#06B6D4" },
+  { name: "Three.js", color: "#FFFFFF" },
+  { name: "Figma", color: "#F24E1E" },
+  { name: "Git", color: "#F05032" },
+  { name: "Postgres", color: "#336791" },
 ];
 
 export function SkillFolder() {
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [open]);
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
@@ -26,84 +37,99 @@ export function SkillFolder() {
 
   return (
     <>
-      {/* Folder button */}
-      <motion.button
+      {/* Folder Preview State */}
+      <motion.div
+        layoutId="folder-bg"
         onClick={() => setOpen(true)}
+        className="w-20 h-20 rounded-[22px] bg-white/[0.08] backdrop-blur-xl border border-white/[0.05] p-3 cursor-pointer relative group flex items-center justify-center shadow-2xl"
         whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.92 }}
-        className="w-16 h-16 rounded-card-sm bg-white/[0.06] backdrop-blur-md border-none p-2.5 cursor-pointer grid grid-cols-3 gap-1"
+        whileTap={{ scale: 0.95 }}
       >
-        {skills.slice(0, 9).map((a, i) => (
-          <motion.span
-            key={i}
-            className="rounded w-full aspect-square"
-            style={{ background: a.color }}
-            animate={{ y: [0, -3, 0] }}
-            transition={{
-              duration: 2 + Math.random(),
-              delay: Math.random(),
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-        ))}
-      </motion.button>
+        <div className="grid grid-cols-3 gap-1.5 w-full aspect-square">
+          {skills.slice(0, 9).map((skill) => (
+            <motion.div
+              key={skill.name}
+              layoutId={`skill-icon-${skill.name}`}
+              className="rounded-[4px] w-full h-full shadow-sm"
+              style={{ 
+                background: skill.color === "#FFFFFF" 
+                  ? "linear-gradient(135deg, #fff 0%, #d1d1d1 100%)" 
+                  : skill.color 
+              }}
+            />
+          ))}
+        </div>
+      </motion.div>
 
-      {/* Expanded overlay */}
+      {/* Expanded State Overlay */}
       <AnimatePresence>
         {open && (
-          <motion.div
-            initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
-            animate={{ opacity: 1, backdropFilter: "blur(24px)" }}
-            exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
-            transition={{ duration: 0.3 }}
-            onClick={() => setOpen(false)}
-            className="fixed inset-0 z-50 bg-obsidian/65 grid place-items-center"
-          >
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
+            {/* Backdrop */}
             <motion.div
-              initial="hidden"
-              animate="show"
-              variants={{
-                hidden: {},
-                show: { transition: { staggerChildren: 0.04 } },
-              }}
-              onClick={(e) => e.stopPropagation()}
-              className="grid grid-cols-3 gap-7 p-8 max-w-[480px] w-full"
-            >
-              {skills.map((a) => (
-                <motion.div
-                  key={a.name}
-                  variants={{
-                    hidden: { scale: 0.4, opacity: 0 },
-                    show: {
-                      scale: 1,
-                      opacity: 1,
-                      transition: { type: "spring", stiffness: 300, damping: 20 },
-                    },
-                  }}
-                  className="flex flex-col items-center gap-2"
-                >
-                  <div
-                    className="w-14 h-14 rounded-card-sm shadow-lg"
-                    style={{
-                      background: a.color,
-                      boxShadow: `0 8px 24px ${a.color}30`,
-                    }}
-                  />
-                  <span className="text-text-primary text-caption">{a.name}</span>
-                </motion.div>
-              ))}
-            </motion.div>
-
-            <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.4 }}
-              className="absolute bottom-8 text-text-tertiary text-xs"
+              exit={{ opacity: 0 }}
+              onClick={() => setOpen(false)}
+              className="absolute inset-0 bg-black/40 backdrop-blur-2xl"
+            />
+
+            {/* Expanded Folder */}
+            <motion.div
+              layoutId="folder-bg"
+              className="relative w-full max-w-[340px] bg-white/[0.1] backdrop-blur-3xl rounded-[38px] p-8 shadow-[0_32px_64px_rgba(0,0,0,0.5)] border border-white/[0.1] flex flex-col items-center"
+              transition={{ type: "spring", stiffness: 350, damping: 35 }}
             >
-              Tap anywhere to close
-            </motion.p>
-          </motion.div>
+              <motion.h3
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className="text-text-primary font-display font-semibold text-xl mb-8"
+              >
+                Tech Stack
+              </motion.h3>
+
+              <div className="grid grid-cols-3 gap-x-6 gap-y-8 w-full justify-items-center">
+                {skills.map((skill) => (
+                  <motion.div
+                    key={skill.name}
+                    className="flex flex-col items-center gap-2 group cursor-pointer"
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                  >
+                    <motion.div
+                      layoutId={`skill-icon-${skill.name}`}
+                      className="w-14 h-14 rounded-2xl shadow-lg flex items-center justify-center"
+                      style={{ 
+                        background: skill.color === "#FFFFFF" 
+                          ? "linear-gradient(135deg, #fff 0%, #d1d1d1 100%)" 
+                          : skill.color,
+                        boxShadow: `0 8px 20px ${skill.color}20`
+                      }}
+                    />
+                    <motion.span 
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      className="text-[11px] font-medium text-text-secondary group-hover:text-text-primary transition-colors uppercase tracking-wider"
+                    >
+                      {skill.name}
+                    </motion.span>
+                  </motion.div>
+                ))}
+              </div>
+
+              <motion.button
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3 }}
+                onClick={() => setOpen(false)}
+                className="mt-10 text-[10px] uppercase tracking-[0.2em] text-text-tertiary hover:text-text-secondary transition-colors"
+              >
+                Close Folder
+              </motion.button>
+            </motion.div>
+          </div>
         )}
       </AnimatePresence>
     </>

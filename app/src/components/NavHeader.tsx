@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "motion/react";
 import { useState } from "react";
 import { Download, Menu, X } from "lucide-react";
 import { SmoothTabs } from "./SmoothTabs";

@@ -1,6 +1,5 @@
 import { SectionReveal } from "@/components/SectionReveal";
 import { ProjectCard } from "@/components/ProjectCard";
-import { ProjectCarousel } from "@/components/ProjectCarousel";
 import type { Project } from "@/types";
 
 const projects: Project[] = [
@@ -38,21 +37,23 @@ const projects: Project[] = [
 
 export function Works() {
   return (
-    <div id="works" className="col-span-1 md:col-span-3 lg:col-span-4">
-      <span className="text-caption text-text-tertiary mb-4 block">Selected Work</span>
+    <div id="works" className="col-span-1 md:col-span-2 lg:row-span-2 flex flex-col gap-3">
+      <span className="text-caption text-text-tertiary block">Selected Work</span>
 
-      {/* Desktop grid */}
-      <div className="hidden md:grid grid-cols-3 gap-3">
-        {projects.map((project) => (
-          <SectionReveal key={project.id}>
-            <ProjectCard project={project} />
-          </SectionReveal>
-        ))}
-      </div>
+      <div className="flex-1 grid grid-cols-1 gap-3">
+        {/* Featured Project */}
+        <SectionReveal key={projects[0].id} className="h-full">
+          <ProjectCard project={projects[0]} />
+        </SectionReveal>
 
-      {/* Mobile carousel */}
-      <div className="md:hidden">
-        <ProjectCarousel projects={projects} />
+        {/* Small projects row */}
+        <div className="grid grid-cols-2 gap-3">
+          {projects.slice(1).map((project) => (
+            <SectionReveal key={project.id}>
+              <ProjectCard project={project} />
+            </SectionReveal>
+          ))}
+        </div>
       </div>
     </div>
   );

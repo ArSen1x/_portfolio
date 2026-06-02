@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { BentoCard } from "@/components/BentoCard";
 import { TypewriterHero } from "@/components/TypewriterHero";
 import { SectionReveal } from "@/components/SectionReveal";
@@ -24,13 +24,13 @@ export function Hero() {
         </motion.div>
 
         {/* Main Content */}
-        <div>
-          <p className="text-body-small text-text-tertiary mb-2 font-body">
+        <div className="flex-1 flex flex-col justify-center">
+          <p className="text-body-small text-text-tertiary mb-3 font-body">
             Hi, I'm Alex
           </p>
           <h1
-            className="font-display font-bold text-text-primary leading-[0.95] tracking-[-0.04em]"
-            style={{ fontSize: "clamp(3rem, 8vw, 6rem)" }}
+            className="font-display font-bold text-text-primary leading-[0.9] tracking-[-0.05em] mb-4"
+            style={{ fontSize: "clamp(3.5rem, 9vw, 6.5rem)" }}
           >
             Designer
             <br />
@@ -38,10 +38,11 @@ export function Hero() {
             <span className="text-accent-glow">.</span>
           </h1>
           <div
-            className="mt-3 font-display font-medium text-text-secondary"
-            style={{ fontSize: "clamp(1.75rem, 4vw, 3rem)" }}
+            className="font-display font-medium text-text-secondary leading-none h-[1.2em] flex items-end"
+            style={{ fontSize: "clamp(1.5rem, 4vw, 2.5rem)" }}
           >
-            I <TypewriterHero />
+            <span>I&nbsp;</span>
+            <TypewriterHero />
           </div>
         </div>
 
