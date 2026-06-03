@@ -1,5 +1,6 @@
 import { motion, AnimatePresence, type Variants } from "motion/react";
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 
 const containerVariants: Variants = {
   hidden: { transition: { staggerChildren: 0.03, staggerDirection: -1 } },
@@ -75,9 +76,12 @@ export function SkillFolder() {
         </div>
       </motion.div>
 
-      {/* Expanded State Overlay */}
-      <AnimatePresence>
-        {open && (
+      {/* Expanded State Overlay — portaled to body so it escapes the bento card's
+          transform (motion whileHover) + overflow-hidden, which would otherwise act
+          as the containing block for this position:fixed layer and clip it. */}
+      {createPortal(
+        <AnimatePresence>
+          {open && (
           <motion.div
             key="skill-overlay"
             className="fixed inset-0 z-[100] flex items-center justify-center p-6"
@@ -148,7 +152,9 @@ export function SkillFolder() {
             </motion.div>
           </motion.div>
         )}
-      </AnimatePresence>
+        </AnimatePresence>,
+        document.body
+      )}
     </>
   );
 }

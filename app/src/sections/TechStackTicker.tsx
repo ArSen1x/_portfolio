@@ -2,7 +2,7 @@ import { SkillTicker } from "@/components/SkillTicker";
 
 export function TechStackTicker() {
   return (
-    <div className="col-span-1 md:col-span-2 lg:col-span-3 py-6 flex items-center">
+    <div className="col-span-full border-y border-white/[0.04] py-5 my-1 flex items-center">
       <SkillTicker />
     </div>
   );

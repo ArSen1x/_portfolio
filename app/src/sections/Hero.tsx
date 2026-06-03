@@ -5,8 +5,8 @@ import { SectionReveal } from "@/components/SectionReveal";
 
 export function Hero() {
   return (
-    <SectionReveal>
-      <BentoCard className="col-span-1 md:col-span-2 row-span-2 relative min-h-[380px] md:min-h-[420px] flex flex-col justify-between">
+    <SectionReveal className="md:col-span-2 md:row-span-2">
+      <BentoCard className="h-full relative min-h-[380px] md:min-h-[420px] flex flex-col justify-between">
         {/* Profile Photo */}
         <motion.div
           className="absolute top-6 right-6"
@@ -30,7 +30,7 @@ export function Hero() {
           </p>
           <h1
             className="font-display font-bold text-text-primary leading-[0.9] tracking-[-0.05em] mb-4"
-            style={{ fontSize: "clamp(3.5rem, 9vw, 6.5rem)" }}
+            style={{ fontSize: "clamp(2.75rem, 8vw, 6.5rem)" }}
           >
             Designer
             <br />

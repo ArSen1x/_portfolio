@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { motion, animate } from "motion/react";
 import { BentoCard } from "@/components/BentoCard";
 import { ScrollHighlight } from "@/components/ScrollHighlight";
 import { SectionReveal } from "@/components/SectionReveal";
@@ -15,9 +17,6 @@ export function About() {
     </SectionReveal>
   );
 }
-
-import { useState } from "react";
-import { motion, animate } from "motion/react";
 
 const stats = [
   { value: "5+", numericValue: 5, label: "Exp." },
@@ -56,9 +55,9 @@ function StatCounter({ value, numericValue, label }: { value: string; numericVal
 export function Experience() {
   return (
     <SectionReveal className="col-span-1">
-      <BentoCard className="h-full flex flex-col justify-between">
+      <BentoCard className="h-full flex flex-col">
         <span className="text-caption text-text-tertiary mb-4 block">Stats</span>
-        <div className="flex flex-col gap-6 py-2">
+        <div className="flex-1 flex flex-col justify-center gap-6">
           {stats.map((stat) => (
             <StatCounter key={stat.label} {...stat} />
           ))}
