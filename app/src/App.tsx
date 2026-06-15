@@ -10,6 +10,7 @@ import { TechStackTicker } from "@/sections/TechStackTicker";
 import { ContactForm, ContactGlobeCard } from "@/sections/Contact";
 import { Footer } from "@/sections/Footer";
 import { CustomCursor } from "@/components/CustomCursor";
+import { AskAI } from "@/components/AskAI";
 
 const AuroraCanvas = lazy(() => import("@/components/AuroraCanvas"));
 
@@ -47,6 +48,7 @@ function App() {
         </div>
       </main>
       <CustomCursor />
+      <AskAI />
     </div>
   );
 }
