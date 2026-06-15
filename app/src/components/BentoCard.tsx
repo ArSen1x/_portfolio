@@ -4,12 +4,12 @@ import type { ReactNode } from "react";
 interface BentoCardProps {
   children: ReactNode;
   className?: string;
-  padding?: "default" | "small";
+  padding?: "default" | "small" | "none";
   style?: React.CSSProperties;
 }
 
 export function BentoCard({ children, className = "", padding = "default", style }: BentoCardProps) {
-  const pad = padding === "small" ? "p-4" : "p-5 md:p-8";
+  const pad = padding === "none" ? "p-0" : padding === "small" ? "p-4" : "p-5 md:p-8";
 
   return (
     <motion.div

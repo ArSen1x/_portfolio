@@ -40,7 +40,7 @@ export function QuickLinks() {
 
       {/* Social Card */}
       <SectionReveal>
-        <BentoCard padding="small" className="flex-1 flex items-center justify-around">
+        <BentoCard padding="small" className="flex items-center justify-around">
           {socialLinks.map((social) => (
             <motion.a
               key={social.label}
@@ -56,6 +56,19 @@ export function QuickLinks() {
               <social.icon size={20} />
             </motion.a>
           ))}
+        </BentoCard>
+      </SectionReveal>
+
+      {/* Photo Card — flex-grows to fill the remaining column height.
+          Swap the src below with your own portrait (e.g. /profile.jpg in public/). */}
+      <SectionReveal className="flex-1 min-h-[160px]">
+        <BentoCard padding="none" className="h-full overflow-hidden group">
+          <img
+            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=800&fit=crop&crop=faces"
+            alt="Alex Rivera"
+            loading="lazy"
+            className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+          />
         </BentoCard>
       </SectionReveal>
     </div>
