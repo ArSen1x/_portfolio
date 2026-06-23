@@ -1,14 +1,14 @@
-import { motion } from "framer-motion";
-import { Download, Github, Linkedin, Twitter, Mail } from "lucide-react";
+import { motion } from "motion/react";
+import { Download, Github, Linkedin, Mail, Facebook } from "lucide-react";
 import { BentoCard } from "@/components/BentoCard";
 import { PillButton } from "@/components/PillButton";
 import { SectionReveal } from "@/components/SectionReveal";
 
 const socialLinks = [
-  { icon: Github, href: "https://github.com", label: "GitHub" },
-  { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
-  { icon: Twitter, href: "https://twitter.com", label: "Twitter" },
-  { icon: Mail, href: "mailto:alex@example.com", label: "Email" },
+  { icon: Github, href: "https://github.com/ArSen1x", label: "GitHub" },
+  { icon: Linkedin, href: "https://www.linkedin.com/in/bridgette-nicolette-manliguez/", label: "LinkedIn" },
+  { icon: Facebook, href: "https://www.facebook.com/bnc.m020218", label: "Facebook" },
+  { icon: Mail, href: "mailto:bn.manliguez0218@gmail.com", label: "Email" },
 ];
 
 export function QuickLinks() {
@@ -40,7 +40,7 @@ export function QuickLinks() {
 
       {/* Social Card */}
       <SectionReveal>
-        <BentoCard padding="small" className="flex-1 flex items-center justify-around">
+        <BentoCard padding="small" className="flex items-center justify-around">
           {socialLinks.map((social) => (
             <motion.a
               key={social.label}
@@ -51,10 +51,24 @@ export function QuickLinks() {
               whileHover={{ scale: 1.1, backgroundColor: "rgba(255,255,255,0.04)" }}
               whileTap={{ scale: 0.95 }}
               aria-label={social.label}
+              data-cursor-magnetic
             >
               <social.icon size={20} />
             </motion.a>
           ))}
+        </BentoCard>
+      </SectionReveal>
+
+      {/* Photo Card — flex-grows to fill the remaining column height.
+          Swap the src below with your own portrait (e.g. /profile.jpg in public/). */}
+      <SectionReveal className="flex-1 min-h-[160px]">
+        <BentoCard padding="none" className="h-full overflow-hidden group">
+          <img
+            src="src/public/bridgette.JPG"
+            alt="Bridgette Manliguez"
+            loading="lazy"
+            className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+          />
         </BentoCard>
       </SectionReveal>
     </div>

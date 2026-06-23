@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "motion/react";
 import { useState } from "react";
 import { Download, Menu, X } from "lucide-react";
 import { SmoothTabs } from "./SmoothTabs";
@@ -40,7 +40,7 @@ export function NavHeader() {
         }}
       >
         <span className="text-text-primary text-sm font-medium font-display px-2 hidden sm:block">
-          Alex Rivera
+          Bridgette Manliguez
         </span>
 
         <div className="hidden md:block">
@@ -54,6 +54,7 @@ export function NavHeader() {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
           title="Download Resume"
+          data-cursor-magnetic
         >
           <Download size={16} />
         </motion.a>

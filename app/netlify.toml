@@ -1,0 +1,15 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+# Vite runs on 3000 (see vite.config.ts), not Netlify's assumed 5173.
+[dev]
+  command = "npm run dev"
+  targetPort = 3000
+  port = 8888
+
+# /api/ask is routed by the function's own config.path (Netlify Functions 2.0).

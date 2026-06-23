@@ -19,9 +19,9 @@ export function Skills() {
 
           <div className="mb-4">
             <h2 className="font-display font-semibold text-text-primary text-xl md:text-2xl tracking-[-0.02em]">
-              9 categories
+              Dev & Design
             </h2>
-            <p className="text-caption text-text-tertiary mt-1">Tap to explore</p>
+            <p className="text-caption text-text-tertiary mt-1">Tap to explore the stack</p>
           </div>
 
           <div className="flex-1 flex flex-col items-center justify-center gap-4">

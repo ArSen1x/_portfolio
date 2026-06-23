@@ -1,5 +1,6 @@
-import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
+import { motion, useScroll, useTransform, type MotionValue } from "motion/react";
 import { useRef } from "react";
+import { cn } from "@/lib/utils";
 
 function HighlightWord({
   children,
@@ -11,8 +12,9 @@ function HighlightWord({
   range: [number, number];
 }) {
   const opacity = useTransform(progress, range, [0.15, 1]);
+  const blur = useTransform(progress, range, ["blur(4px)", "blur(0px)"]);
   return (
-    <motion.span className="mr-[0.28em]" style={{ opacity }}>
+    <motion.span aria-hidden="true" className="mr-[0.28em]" style={{ opacity, filter: blur }}>
       {children}
     </motion.span>
   );
@@ -37,8 +39,14 @@ export function ScrollHighlight({
   return (
     <p
       ref={ref}
-      className={`font-display font-semibold leading-[1.4] max-w-[680px] flex flex-wrap ${className}`}
-      style={{ fontSize: "clamp(1.5rem, 3.5vw, 2.5rem)" }}
+      aria-label={text}
+      className={cn(
+        // Defaults for standalone use; caller's className (size/leading/weight)
+        // wins via twMerge. No inline fontSize — it would override the caller and
+        // leave line-height mismatched (40px glyphs in a 28px line => overlap).
+        "font-display font-semibold leading-[1.4] max-w-[680px] flex flex-wrap text-2xl md:text-4xl",
+        className
+      )}
     >
       {words.map((w, i) => {
         const start = i / words.length;

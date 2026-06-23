@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import type { ReactNode } from "react";
 
 interface PillButtonProps {
@@ -36,6 +36,7 @@ export function PillButton({
       className={`inline-flex items-center justify-center gap-2 rounded-pill px-5 py-2.5 text-[13px] font-medium font-body tracking-wide transition-colors duration-200 disabled:opacity-50 ${variantStyles[variant]} ${fullWidth ? "w-full" : ""} ${className}`}
       whileHover={{ scale: 1.03 }}
       whileTap={{ scale: 0.97 }}
+      data-cursor-magnetic
     >
       {icon}
       {children}

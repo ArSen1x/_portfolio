@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import type { Project } from "@/types";
 import { ProjectCard } from "./ProjectCard";
@@ -32,6 +32,8 @@ export function ProjectCarousel({ projects }: ProjectCarouselProps) {
         dragTransition={{ power: 0.3, timeConstant: 280 }}
         whileTap={{ cursor: "grabbing" }}
         className="flex gap-4 w-max px-4"
+        data-cursor="drag"
+        data-cursor-label="Drag"
       >
         {projects.map((project) => (
           <div key={project.id} className="w-[280px] shrink-0">
