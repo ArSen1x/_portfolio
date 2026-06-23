@@ -20,7 +20,7 @@ describe("validateRequest", () => {
     const r = validateRequest({
       messages: [
         userMsg("Hi"),
-        { role: "model", content: "Hello, ask me anything about Alex." },
+        { role: "model", content: "Hello, ask me anything about Bridgette." },
         userMsg("Recent projects?"),
       ],
     });

@@ -10,10 +10,12 @@ interface SkillTickerProps {
 export function SkillTicker({
   items = [
     "React",
+    "CSS",
+    "JavaScript",
     "TypeScript",
     "Node.js",
     "Figma",
-    "Three.js",
+    "Canva",
     "PostgreSQL",
     "Docker",
     "Next.js",
@@ -21,6 +23,9 @@ export function SkillTicker({
     "GraphQL",
     "AWS",
     "Python",
+    "Firebase",
+    "Supabase",
+    "Git",
   ],
   speed = 50,
   className = "",

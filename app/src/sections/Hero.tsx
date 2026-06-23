@@ -13,10 +13,11 @@ export function Hero() {
           whileHover={{ scale: 1.08 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
         >
+          {/* Change this into my logo */}
           <div className="w-[72px] h-[72px] rounded-full border-2 border-white/[0.08] overflow-hidden">
             <img
-              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face"
-              alt="Alex Rivera"
+              src="src/public/bridgette.JPG"
+              alt="Bridgette Manliguez"
               className="w-full h-full object-cover"
               loading="eager"
             />
@@ -26,15 +27,15 @@ export function Hero() {
         {/* Main Content */}
         <div className="flex-1 flex flex-col justify-center">
           <p className="text-body-small text-text-tertiary mb-3 font-body">
-            Hi, I'm Alex
+            Hi, I'm Bridgette
           </p>
           <h1
             className="font-display font-bold text-text-primary leading-[0.9] tracking-[-0.05em] mb-4"
             style={{ fontSize: "clamp(2.75rem, 8vw, 6.5rem)" }}
           >
-            Designer
+            Designer &
             <br />
-            Developer
+            Software Developer
             <span className="text-accent-glow">.</span>
           </h1>
           <div
@@ -54,9 +55,9 @@ export function Hero() {
               animate={{ scale: [1, 1.3, 1], opacity: [1, 0.7, 1] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
             />
-            <span className="text-caption text-text-tertiary">Available for work</span>
+            <span className="text-caption text-text-tertiary">Open for Projects</span>
           </div>
-          <span className="text-caption text-text-tertiary">San Francisco</span>
+          <span className="text-caption text-text-tertiary">Philippines</span>
         </div>
       </BentoCard>
     </SectionReveal>

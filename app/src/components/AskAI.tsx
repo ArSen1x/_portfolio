@@ -4,7 +4,7 @@ import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { MessageCircle, X, ArrowUp } from "lucide-react";
 import { askAI, type ChatMessage } from "@/lib/askClient";
 
-const STARTERS = ["What is his stack?", "Recent projects?", "Is he available for work?"];
+const STARTERS = ["What is her stack?", "Recent projects?", "Is she available for work?"];
 
 export function AskAI() {
   const [open, setOpen] = useState(false);
@@ -62,7 +62,7 @@ export function AskAI() {
         >
           <div className="flex items-center justify-between px-5 pt-5 pb-3">
             <div>
-              <h2 className="font-display text-sm font-semibold text-text-primary">Ask about Alex</h2>
+              <h2 className="font-display text-sm font-semibold text-text-primary">Ask about Bridgette</h2>
               <p className="text-caption text-text-tertiary">Powered by Gemini</p>
             </div>
             <button
@@ -77,7 +77,7 @@ export function AskAI() {
           <div ref={listRef} className="flex-1 space-y-3 overflow-y-auto px-5 py-2">
             {messages.length === 0 && (
               <div className="space-y-2 pt-1">
-                <p className="text-sm text-text-secondary">Ask me anything about Alex.</p>
+                <p className="text-sm text-text-secondary">Ask me anything about Bridgette.</p>
                 <div className="flex flex-col gap-2">
                   {STARTERS.map((s) => (
                     <button

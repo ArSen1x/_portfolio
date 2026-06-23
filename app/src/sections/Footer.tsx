@@ -15,11 +15,7 @@ export function Footer() {
       transition={{ duration: 0.5 }}
     >
       <p className="text-caption text-text-tertiary">
-        &copy; {new Date().getFullYear()} Alex Rivera. Crafted with care.
-      </p>
-
-      <p className="text-caption text-text-tertiary">
-        Built with Vite · Motion · Three.js
+        &copy; {new Date().getFullYear()} Bridgette. Crafted with care.
       </p>
 
       <motion.button

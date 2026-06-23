@@ -83,8 +83,8 @@ export function ContactGlobeCard() {
           <ContactGlobe />
         </div>
         <div className="z-10">
-          <p className="text-text-secondary italic text-sm">— Alex Rivera</p>
-          <p className="text-text-tertiary text-[10px] uppercase mt-1">San Francisco, CA</p>
+          <p className="text-text-secondary italic text-sm">— Bridgette Manliguez</p>
+          <p className="text-text-tertiary text-[10px] uppercase mt-1">PH</p>
         </div>
       </BentoCard>
     </SectionReveal>

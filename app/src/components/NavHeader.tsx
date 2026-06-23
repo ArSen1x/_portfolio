@@ -40,7 +40,7 @@ export function NavHeader() {
         }}
       >
         <span className="text-text-primary text-sm font-medium font-display px-2 hidden sm:block">
-          Alex Rivera
+          Bridgette Manliguez
         </span>
 
         <div className="hidden md:block">

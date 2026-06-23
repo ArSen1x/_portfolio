@@ -40,9 +40,9 @@ describe("ask handler", () => {
   });
 
   it("returns 200 with the model reply on a valid question", async () => {
-    generate.mockResolvedValue({ text: "Alex works with React and TypeScript." });
+    generate.mockResolvedValue({ text: "Bridgette works with React and TypeScript." });
     const res = await handler(
-      post({ messages: [{ role: "user", content: "What is his stack?" }] }),
+      post({ messages: [{ role: "user", content: "What is her stack?" }] }),
       ctx("ip-ok")
     );
     expect(res.status).toBe(200);

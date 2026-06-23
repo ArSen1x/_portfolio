@@ -1,14 +1,14 @@
 import { motion } from "motion/react";
-import { Download, Github, Linkedin, Twitter, Mail } from "lucide-react";
+import { Download, Github, Linkedin, Mail, Facebook } from "lucide-react";
 import { BentoCard } from "@/components/BentoCard";
 import { PillButton } from "@/components/PillButton";
 import { SectionReveal } from "@/components/SectionReveal";
 
 const socialLinks = [
-  { icon: Github, href: "https://github.com", label: "GitHub" },
-  { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
-  { icon: Twitter, href: "https://twitter.com", label: "Twitter" },
-  { icon: Mail, href: "mailto:alex@example.com", label: "Email" },
+  { icon: Github, href: "https://github.com/ArSen1x", label: "GitHub" },
+  { icon: Linkedin, href: "https://www.linkedin.com/in/bridgette-nicolette-manliguez/", label: "LinkedIn" },
+  { icon: Facebook, href: "https://www.facebook.com/bnc.m020218", label: "Facebook" },
+  { icon: Mail, href: "mailto:bn.manliguez0218@gmail.com", label: "Email" },
 ];
 
 export function QuickLinks() {
@@ -64,8 +64,8 @@ export function QuickLinks() {
       <SectionReveal className="flex-1 min-h-[160px]">
         <BentoCard padding="none" className="h-full overflow-hidden group">
           <img
-            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=800&fit=crop&crop=faces"
-            alt="Alex Rivera"
+            src="src/public/bridgette.JPG"
+            alt="Bridgette Manliguez"
             loading="lazy"
             className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
           />
